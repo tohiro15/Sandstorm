@@ -10,16 +10,30 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody _rb;
 
+    private AudioSource _playerAudioSource;
+    private AudioSource _stepsAudioSource;
+    private SoundManager _soundManager;
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
-    public void Initialization(Rigidbody rigidbody, float speed, float sensitivity)
+    public void Initialization(Rigidbody rigidbody, AudioSource playerAudioSource, AudioSource stepsAudioSource, SoundManager soundManager, float speed, float sensitivity)
     {
         _rb = rigidbody;
+        if (_rb == null) Debug.Log("Rigidbody - не инициализирован!");
+
+        _playerAudioSource = playerAudioSource;
+        _stepsAudioSource = stepsAudioSource;
+        _soundManager = soundManager;
+        _stepsAudioSource = stepsAudioSource;
+        if (_stepsAudioSource == null) Debug.Log("Steps Audio Source - не инициализирован!");
+        if (_soundManager == null) Debug.Log("Sound Manager - не инициализирован!");
+
         _speed = speed;
+
         _sensitivity = sensitivity;
     }
     public void Movement()
@@ -32,6 +46,10 @@ public class PlayerController : MonoBehaviour
         if (_rb != null)
         {
             _rb.MovePosition(transform.position + direction);
+        }
+        if (moveX != 0 || moveZ != 0)
+        {
+           _soundManager.FootStapsSound(_stepsAudioSource);
         }
     }
 

@@ -23,7 +23,6 @@ public class TerrainGenerator : MonoBehaviour
         _terrain = GetComponent<Terrain>();
         _terrain.terrainData = GenerateTerrain(_terrain.terrainData);
     }
-
     TerrainData GenerateTerrain(TerrainData terrainData)
     {
         terrainData.heightmapResolution = _width + 1;
